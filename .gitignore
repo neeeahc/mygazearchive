@@ -1,0 +1,6 @@
+_review/
+*.md
+.DS_Store
+._*
+Thumbs.db
+assets/audio/

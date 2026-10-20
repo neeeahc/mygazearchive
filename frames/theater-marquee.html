@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Theater Marquee — My Gaze Archive</title>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@800&family=Inter+Tight:wght@400;500;600;800&family=Lobster&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="page-case">
+
+<header class="bar">
+  <a class="bar-logo ink" href="../index.html">My Gaze Archive</a>
+  <nav class="bar-nav" aria-label="페이지">
+    <a href="../archive.html" class="f-why is-active" aria-current="page">Archive</a>
+    <a href="../info.html" class="f-why">Info</a>
+  </nav>
+  <time class="bar-clock" id="clock" aria-live="off"></time>
+</header>
+
+<main class="page-main case">
+  <!-- 설명은 이 묶음 안에서만 제자리에 머문다. 끝의 빈 공간에서 다시 보이고, 그 뒤로는 페이지와 함께 올라간다 -->
+  <div class="case-stack">
+  <section class="case-intro" aria-labelledby="case-title">
+    <h1 id="case-title" class="visually-hidden">Theater Marquee</h1>
+    <p class="case-text split">Marquee bulbs, neon signs and a dark sidewalk at night. The whole street glows like it&#x27;s waiting for a show to let out.</p>
+    <p class="case-text split">The kind of street you walk slowly on purpose.</p>
+    <dl class="case-meta">
+      <div><dt>Frame</dt><dd>Theater Marquee</dd></div>
+      <div><dt>Chapter</dt><dd><a class="f-say" href="../archive.html#say-so">Say So</a><br><span class="case-sub">Doja Cat</span></dd></div>
+      <div><dt>Photo</dt><dd>Kostiantyn Trundaiev<br><span class="case-sub">Unsplash</span></dd></div>
+    </dl>
+  </section>
+
+  <figure class="case-hero reveal">
+    <img src="../assets/road02_unsplash_kostiantyntrundaiev.jpg" data-lum="1251787a5523528ab86934428a86592233566538125637a738235656b8472554567556455544564633334575231233455432" alt="Theater Marquee, Kostiantyn Trundaiev">
+  </figure>
+
+  <section class="case-more" aria-label="같은 묶음의 다른 사진">
+    <p class="case-more-label">More from <span class="f-say">Say So</span></p>
+    <div class="case-pairs">
+      <a class="case-pair" href="whitewashed-alley.html"><span class="item-media"><img src="../assets/road01_unsplash_hectorjrivas.jpg" data-lum="bdbbddcbbaabbddbbbbababcda9bb8babbc66698ba785684686765468458335666998844477876a833578888882479889975" alt="Whitewashed Alley, Hector J Rivas" loading="lazy"></span><span class="cap-name">Whitewashed Alley</span></a>
+      <a class="case-pair" href="hanbok-at-the-gate.html"><span class="item-media"><img src="../assets/road03_unsplash_mossukjaroenkraisri.jpg" data-lum="13233234421112223322113344432522322211235311002310233100242123330010426a786543378acbdc7546dddddabdcc" alt="Hanbok at the Gate, Mos Sukjaroenkraisri" loading="lazy"></span><span class="cap-name">Hanbok at the Gate</span></a>
+    </div>
+  </section>
+  <div class="case-spacer" aria-hidden="true"></div>
+  </div>
+
+  <a class="case-next" href="hanbok-at-the-gate.html">
+    <span class="case-next-label">Next Photo</span>
+    <span class="case-next-name">Hanbok at the Gate</span>
+    <span class="case-next-thumb"><img src="../assets/road03_unsplash_mossukjaroenkraisri.jpg" data-lum="13233234421112223322113344432522322211235311002310233100242123330010426a786543378acbdc7546dddddabdcc" alt="" loading="lazy"></span>
+  </a>
+  <!-- 음악 재생바 — 레퍼런스(pacomepertant.com 프로젝트 영상) 하단 바: 일시정지 · 소리 · 사진 띠 재생바 -->
+  <div class="player" id="player" hidden data-key="say-so" data-song="../assets/audio/say-so.mp3" data-label="Say So — Doja Cat">
+    <button type="button" class="pl-btn" id="player-btn" aria-label="일시정지">
+      <svg class="i-pause" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1" width="2.6" height="10" rx="1" fill="currentColor"/><rect x="7.4" y="1" width="2.6" height="10" rx="1" fill="currentColor"/></svg>
+      <svg class="i-play" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9a.6.6 0 0 0 .9.5l7-4.5a.6.6 0 0 0 0-1l-7-4.5a.6.6 0 0 0-.9.5Z" fill="currentColor"/></svg>
+    </button>
+    <button type="button" class="pl-btn" id="player-mute" aria-label="소리 끄기">
+      <svg class="i-on" width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M8.67 3.33a3.33 3.33 0 0 1 0 5.34" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/><path d="M11 1c1.25 1.17 2 3 2 5s-.75 3.83-2 5" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/><path d="M2.67 8H1.33a.67.67 0 0 1-.66-.67V4.67c0-.37.3-.67.66-.67h1.34L5 1c.3-.5 1-.3 1 .33v9.34c0 .63-.7.83-1 .33L2.67 8Z" fill="currentColor" stroke="currentColor" stroke-width="1.33" stroke-linejoin="round"/></svg>
+      <svg class="i-off" width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M9 4l4 4M13 4l-4 4" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/><path d="M2.67 8H1.33a.67.67 0 0 1-.66-.67V4.67c0-.37.3-.67.66-.67h1.34L5 1c.3-.5 1-.3 1 .33v9.34c0 .63-.7.83-1 .33L2.67 8Z" fill="currentColor" stroke="currentColor" stroke-width="1.33" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="pl-track" id="player-track" role="slider" tabindex="0" aria-label="재생 위치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="pl-thumbs" id="player-thumbs"><img src="../assets/road01_unsplash_hectorjrivas.jpg" alt=""><img src="../assets/road02_unsplash_kostiantyntrundaiev.jpg" alt=""><img src="../assets/road03_unsplash_mossukjaroenkraisri.jpg" alt=""><img src="../assets/road04_unsplash_yiranding.jpg" alt=""><img src="../assets/road05_unsplash_zionc.jpg" alt=""></div>
+      <span class="pl-played" id="player-played"></span>
+      <span class="pl-head" id="player-head"></span>
+    </div>
+    <audio id="player-audio" preload="metadata"></audio>
+  </div>
+  <!-- 마우스를 따라다니는 play ! / pause 알약 — 빈 곳을 누르면 멈추고 다시 튼다 -->
+  <div class="cursor-pill" id="cursor-pill" aria-hidden="true">pause</div>
+</main>
+
+<footer class="foot">
+  <span class="ink">© 2026 이채은</span>
+  <span class="foot-mid"><a href="../archive.html#midnight-sun">Midnight Sun</a><br><a href="../archive.html#born-this-way">Born This Way</a><br><a href="../archive.html#say-so">Say So</a></span>
+  <span class="foot-right">Photos via Unsplash · Pexels<br><a href="../info.html">Info</a></span>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

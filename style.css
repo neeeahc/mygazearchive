@@ -1,0 +1,494 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--bar-h) + 24px); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex; flex-direction: column;   /* 내용이 짧은 페이지도 푸터가 바닥에 붙게 */
+  background: var(--color-bg);
+  color: var(--color-muted);
+  font-family: var(--font);
+  font-weight: var(--weight);
+  font-size: var(--size);
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, p, figure, ul { margin: 0; font-size: inherit; font-weight: inherit; }
+ul { padding: 0; list-style: none; }
+main { flex: 1; }
+
+/* 개별 페이지 — 상단 바 아래에서 시작 */
+.page-main { padding-top: calc(var(--bar-h) + var(--space-page-top)); }
+a { color: inherit; text-decoration: none; transition: color .2s; }
+a:hover { color: var(--color-ink); }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+img { display: block; width: 100%; height: auto; }
+.ink { color: var(--color-ink); }
+
+/* 상단 바 — 반투명 회색 + 블러, 로고 / 가운데 메뉴 / 시계 */
+.bar {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  height: var(--bar-h);
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  padding: 0 var(--margin);
+  background: var(--color-bar);
+  -webkit-backdrop-filter: var(--blur-bar); backdrop-filter: var(--blur-bar);
+}
+.bar-nav { display: flex; gap: clamp(28px, 9vw, 120px); }
+.bar-nav a.is-active { color: var(--color-ink); }
+/* 바로 아래가 어두운 사진이면 흰 글자로 (script.js가 on-dark를 붙인다) */
+.bar-logo, .bar-nav a, .bar-clock { transition: color .3s var(--ease); }
+.bar.on-dark .bar-nav a { color: var(--color-muted-inv); }
+.bar.on-dark .bar-logo, .bar.on-dark .bar-clock, .bar.on-dark .bar-nav a.is-active, .bar.on-dark .bar-nav a:hover { color: var(--color-bg); }
+.bar-clock { justify-self: end; color: var(--color-ink); font-variant-numeric: tabular-nums; }
+
+/* 첫 화면 — 스크롤에 따라 도는 3D 링 */
+.ring-section { height: var(--h-ring); }   /* 끝까지 내리면 링이 한 바퀴 — 15장 모두 앞으로 지나간다 */
+.ring-stage {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  perspective: 1100px; perspective-origin: 50% 50%;
+  display: grid; place-items: center;
+}
+.ring { position: relative; width: var(--card-w); height: 1px; transform-style: preserve-3d; --card-w: clamp(130px, 13vw, 250px); }
+.ring-card {
+  position: absolute; left: 0; top: 0; width: var(--card-w);
+  transform-origin: 50% 50%;
+  translate: 0 -50%;
+}
+.ring-card img { cursor: zoom-in; }
+.ring-note {
+  position: absolute; left: var(--margin); bottom: calc(var(--margin) + 4px);
+  display: flex; gap: 16px;
+}
+
+/* 소개 문장 */
+.intro {
+  padding: 0 var(--margin);
+  margin: 0 0 var(--section-gap);
+  display: grid; grid-template-columns: repeat(var(--cols), 1fr); column-gap: var(--gutter);
+}
+/* 폭을 고정 칸에 가두지 않고, 화면이 넓으면 넓게·좁으면 좁게 흐르게 */
+.intro-text {
+  grid-column: 3 / -1;
+  max-width: min(100%, 48em);
+  word-break: keep-all;          /* 한글이 '담았/어'처럼 단어 중간에서 끊기지 않게 */
+  text-wrap: pretty;             /* 마지막 줄에 한 글자만 남지 않게 */
+}
+
+/* 묶음 */
+.bundle { padding: 0 var(--margin); margin-bottom: var(--section-gap); }
+.bundle-head {
+  display: grid; grid-template-columns: repeat(var(--cols), 1fr); column-gap: var(--gutter);
+  margin-bottom: var(--space-title);
+}
+.bundle-head { align-items: end; row-gap: 12px; }
+.bundle-head h2 { grid-column: 1 / span 3; }
+.bundle-head p { grid-column: 4 / span 2; padding-bottom: .6em; }
+
+/* 묶음 이름 — 노래마다 다른 글꼴 */
+.f-sun { font-family: var(--font-sun); font-weight: 800; letter-spacing: var(--track-sun); }
+.f-born { font-family: var(--font-born); font-weight: 400; text-transform: uppercase; letter-spacing: var(--track-born); }
+.f-say { font-family: var(--font-say); font-weight: 400; }
+.bundle-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.bundle-title > span:first-child { font-size: var(--size-title); line-height: .95; }
+.bundle-title .count { color: var(--color-muted); }
+.bar-nav a { font-size: var(--size-nav); }
+.bar-nav .f-born { font-size: var(--size-nav-born); }
+.bar-nav .f-say { font-size: var(--size-nav-say); }
+
+/* 아카이브 그리드 — 6열, 사진은 원래 비율 그대로 위쪽 정렬 */
+.grid {
+  display: grid; grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+  column-gap: var(--gutter); row-gap: var(--row-gap);
+  align-items: start;
+}
+.item-btn { display: block; width: 100%; background: var(--color-placeholder); cursor: zoom-in; overflow: hidden; }
+.item-btn img { transition: opacity .4s var(--ease), transform .8s var(--ease); }
+.item-btn:hover img { transform: scale(1.02); }
+.item figcaption { margin-top: 8px; display: flex; flex-direction: column; gap: 1px; }
+
+/* ── Archive 페이지 — 레퍼런스 Archive: 제목 없이 6열, 원래 비율, 위쪽 정렬, 11px 회색 캡션 ── */
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.archive { padding: 0 var(--margin); margin-bottom: var(--section-gap); }
+
+/* 노래 이름 버튼 — 제목 대신 필터. 고른 것만 검정 */
+.filters { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: clamp(16px, 2.4vw, 40px); row-gap: 8px; }
+.filter { font-size: var(--size-filter); line-height: 1.1; color: var(--color-lead); transition: color .2s; }
+.filter:hover, .filter.is-active { color: var(--color-ink); }
+.filter sup { font-family: var(--font); font-size: var(--size-caption); font-weight: var(--weight-caption); letter-spacing: 0; text-transform: none; margin-left: 3px; vertical-align: top; color: var(--color-lead); }
+.filter-desc { margin: 12px 0 var(--space-title); color: var(--color-muted); }
+
+.archive-grid {
+  display: grid; grid-template-columns: repeat(var(--archive-cols), minmax(0, 1fr));
+  column-gap: var(--gutter); row-gap: var(--row-gap);
+  align-items: start;
+}
+.archive-grid .item[hidden] { display: none; }
+.archive-grid figcaption {
+  margin-top: 8px; display: flex; flex-direction: column; gap: 0; line-height: 1.1;   /* 이름과 작가 줄을 붙여 한 덩어리로 */
+  font-size: var(--size-caption); font-weight: var(--weight-caption); color: var(--color-lead);
+}
+.cap-name { transition: color .2s; }
+.item:hover .cap-name { color: var(--color-ink); }
+.cap-cat { font-size: var(--size-nav); line-height: 1.1; }
+.cap-cat.f-born { font-size: var(--size-nav-born); }
+.cap-cat.f-say { font-size: var(--size-nav-say); }
+.cap-credit { color: var(--color-muted); font-weight: var(--weight-regular); }   /* Regular 400 */
+
+/* 한 장 = 한 열. 열 너비가 화면 폭의 비율(1fr)이라 창을 줄이고 늘리면 사진도 같이 줄고 는다.
+   좁아지면 열 수(--grid-cols)만 5 → 3 → 2로 줄인다 — 아래 반응형 구간 참고 */
+
+/* 고른 이유 */
+.why {
+  padding: 0 var(--margin); margin-bottom: var(--section-gap);
+  display: grid; grid-template-columns: repeat(var(--cols), 1fr); column-gap: var(--gutter);
+}
+.why { row-gap: var(--space-lead); }
+.why > .bundle-title { grid-column: 1 / -1; }
+.f-why { font-family: var(--font); font-weight: var(--weight-title); letter-spacing: var(--track-sun); }
+/* 레퍼런스 Info 문단: 큰 회색 글 + 핵심어만 검정 */
+.why-text {
+  grid-column: 1 / span 4;
+  font-size: var(--size-lead);
+  line-height: var(--line-lead);
+  font-weight: var(--weight-lead);
+  letter-spacing: var(--track-lead);
+  color: var(--color-lead);
+  text-wrap: pretty;
+}
+
+/* 레퍼런스 Info 목록 — 11px 회색 라벨 + 14px 목록, 세로로 쌓임 */
+.info { grid-column: 1 / -1; display: flex; flex-direction: column; gap: var(--space-info); margin-top: calc(var(--space-info) - var(--space-lead)); }
+.info-label { font-size: var(--size-caption); font-weight: var(--weight-caption); color: var(--color-lead); margin-bottom: var(--space-label); }
+.info-list { font-size: var(--size-info); line-height: var(--line-info); font-weight: var(--weight-caption); color: var(--color-lead); }
+.info-list.ink { color: var(--color-ink); }
+.info-list a:hover { color: var(--color-lead); }
+
+/* 푸터 — 레퍼런스처럼 세 덩어리가 아래쪽에 맞춰 놓임 */
+.foot {
+  display: grid; grid-template-columns: repeat(var(--cols), 1fr); column-gap: var(--gutter);
+  align-items: end;
+  padding: 0 var(--margin) var(--margin);
+}
+.foot-mid { grid-column: 3; }
+.foot-right { grid-column: 5 / span 2; }
+
+/* 크게 보기 */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--color-bg);
+  display: grid; place-items: center;
+  padding: calc(var(--bar-h) + 24px) var(--margin) 48px;
+  opacity: 0; transition: opacity .3s var(--ease);
+}
+.lightbox[hidden] { display: none; }
+.lightbox.is-open { opacity: 1; }
+.lb-figure { display: flex; flex-direction: column; align-items: center; gap: 8px; max-height: 100%; }
+.lb-figure img { width: auto; max-width: min(90vw, 1200px); max-height: calc(100vh - var(--bar-h) - 110px); object-fit: contain; }
+.lb-figure figcaption { align-self: flex-start; display: flex; gap: 16px; }
+.lb-close { position: absolute; top: 9px; right: var(--margin); color: var(--color-ink); }
+.lb-nav { position: absolute; bottom: var(--margin); color: var(--color-muted); }
+.lb-nav:hover, .lb-close:hover { color: var(--color-ink); }
+.lb-prev { left: var(--margin); }
+.lb-next { right: var(--margin); }
+
+/* 반응형 — 사진 묶음 열 수
+   1024 이상: 5열(한 줄, 폭 꽉 채움) · 720–1023: 3열 · 480–719: 2열 · 480 미만: 2열 + 첫 장 크게 */
+@media (max-width: 1279px) {
+  :root { --archive-cols: 4; }
+}
+@media (max-width: 1023px) {
+  :root { --archive-cols: 3; --cols: 3; --grid-cols: 3; --row-gap: 40px; --section-gap: 128px; }
+  .intro-text { grid-column: 2 / -1; }
+  .bundle-head h2, .bundle-head p { grid-column: 1 / -1; }
+  .bundle-head p { padding-bottom: 0; max-width: 46ch; }
+  .why-text { grid-column: 1 / -1; }
+  .foot-mid { grid-column: 2; }
+  .foot-right { grid-column: 3; }
+  .bar-nav { gap: 32px; }
+}
+@media (max-width: 719px) {
+  :root { --cols: 2; --grid-cols: 2; --archive-cols: 2; --section-gap: 96px; --row-gap: 32px; --gutter: 8px; --bar-h: 58px; }
+  /* 상단 바: 1줄 로고·시계, 2줄 메뉴(넘치면 가로 스크롤) */
+  .bar { grid-template-columns: 1fr auto; grid-template-rows: 28px 26px; align-content: center; }
+  .bar-nav { grid-column: 1 / -1; grid-row: 2; gap: 20px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .bar-nav::-webkit-scrollbar { display: none; }
+  .bar-clock { grid-column: 2; grid-row: 1; }
+  .bar-logo { white-space: nowrap; }
+  .intro-text, .why > .bundle-title, .why p { grid-column: 1 / -1; }
+  .foot { row-gap: 16px; }
+  .foot > * { grid-column: auto !important; }
+  .ring-section { height: var(--h-ring); }
+}
+@media (max-width: 479px) {
+  /* 첫 장을 두 칸에 걸쳐 크게 — 5장이 2·2로 딱 떨어지게 */
+  .item:first-child { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .item-btn img, .lightbox { transition: none; }
+}
+
+button:focus:not(:focus-visible) { outline: none; }
+:focus-visible { outline: 1px solid var(--color-ink); outline-offset: 2px; }
+
+
+/* ───────── 페이지 전환 — 레퍼런스처럼 올라오며 나타나고, 떠날 때 흐려진다 ───────── */
+.js main, .js .foot { opacity: 0; transform: translateY(var(--shift)); transition: opacity var(--dur-in) var(--ease), transform var(--dur-in) var(--ease); }
+.js.is-ready main, .js.is-ready .foot { opacity: 1; transform: none; }
+.js.is-leaving main, .js.is-leaving .foot { opacity: 0; transform: translateY(calc(var(--shift) / -2)); transition-duration: var(--dur-out); }
+.js.is-ready .page-home main { transform: none; }
+
+/* 큰 문단 — 단어가 차례로 떠오른다 */
+.js .split .w { display: inline-block; opacity: 0; transform: translateY(.35em); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: calc(var(--i) * 14ms + 150ms); }
+.js.is-ready .split .w { opacity: 1; transform: none; }
+
+/* 사진 — 화면에 들어오면 나타난다 */
+.js .item, .js .case-hero, .js .case-pair { opacity: 0; transform: translateY(var(--shift)); }
+.js .item.is-in, .js .case-hero.is-in, .js .case-pair.is-in { opacity: 1; transform: none; transition: opacity var(--dur-in) var(--ease) var(--d, 0ms), transform var(--dur-in) var(--ease) var(--d, 0ms); }
+
+/* ───────── Archive — 세 묶음을 섞어 빈 칸 없이 채운다 ───────── */
+.item-link { display: block; }
+.item-media { display: block; overflow: hidden; background: var(--color-placeholder); }
+.item-media img { transition: transform .9s var(--ease); }
+.item-link:hover .item-media img { transform: scale(var(--zoom-hover)); }
+
+/* Info — 홈에서 옮겨 온 소개 문장. 위 문단과 한 줄 띄움 */
+.why-intro { margin-top: calc(1em - var(--space-lead)); word-break: keep-all; }
+
+/* ───────── 사진 한 장 페이지 — 레퍼런스 case(clubstrozzi) ───────── */
+.case { padding: calc(var(--bar-h) + var(--space-case-top)) var(--margin) 0; }
+.case-text {
+  font-size: var(--size-lead); line-height: var(--line-lead); font-weight: var(--weight-lead);
+  letter-spacing: var(--track-lead); color: var(--color-lead); text-wrap: pretty;
+}
+.case-text + .case-text { margin-top: 1em; }
+.case-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-case); margin: var(--gap-case) 0 0; }
+.case-meta dt { font-size: var(--size-caption); font-weight: var(--weight-caption); color: var(--color-lead); margin-bottom: 4px; }
+.case-meta dd { margin: 0; font-size: var(--size-lead); line-height: var(--line-lead); font-weight: var(--weight-lead); letter-spacing: var(--track-lead); color: var(--color-ink); }
+.case-meta dd a:hover { opacity: .5; }
+.case-sub { color: var(--color-lead); }
+
+.case-hero { margin: calc(var(--space-title) * 2) 0 0; display: flex; justify-content: center; }
+.case-hero img { width: auto; max-width: 100%; max-height: calc(100vh - var(--bar-h) - var(--margin) * 2); }
+
+.case-more { margin-top: var(--section-gap); }
+.case-more-label { font-size: var(--size-caption); font-weight: var(--weight-caption); color: var(--color-lead); margin-bottom: 8px; }
+.case-more-label span { font-size: var(--size-nav); color: var(--color-ink); }
+.case-pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-case); }
+.case-pair .item-media { aspect-ratio: var(--ratio-case); }
+.case-pair .item-media img { width: 100%; height: 100%; object-fit: cover; }
+.case-pair .cap-name { display: block; margin-top: 8px; font-size: var(--size-caption); font-weight: var(--weight-caption); color: var(--color-lead); }
+.case-pair:hover .cap-name { color: var(--color-ink); }
+.case-pair:hover .item-media img { transform: scale(var(--zoom-hover)); }
+
+/* Next Photo — 가운데 회색 글자. 영역에 올리면 작은 다음 사진이 마우스를 따라다니고, 영역 밖으로는 나가지 않는다 */
+.case-next {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  margin: var(--section-gap) calc(var(--margin) * -1) 0; padding: var(--space-next) 0;
+  text-align: center; overflow: hidden;            /* 사진이 이 영역 안에서만 보이게 */
+}
+.case-next-label, .case-next-name { position: relative; z-index: 1; }
+.case-next-label { font-size: var(--size-lead); font-weight: var(--weight-lead); letter-spacing: var(--track-lead); color: var(--color-lead); transition: color .3s; }
+.case-next-name { font-size: var(--size-caption); font-weight: var(--weight-caption); color: var(--color-lead); }
+.case-next-thumb {
+  position: absolute; left: 0; top: 0; width: var(--size-thumb); pointer-events: none;
+  opacity: 0; scale: .85; transition: opacity .35s var(--ease), scale .35s var(--ease);
+}
+.case-next-thumb img { display: block; width: 100%; height: auto; }
+.case-next:hover .case-next-label, .case-next:focus-visible .case-next-label { color: var(--color-ink); }
+.case-next:hover .case-next-thumb, .case-next:focus-visible .case-next-thumb { opacity: 1; scale: 1; }
+.case-next:focus-visible .case-next-thumb { translate: -50% 0; left: 50%; top: 12px; }
+
+@media (max-width: 719px) {
+  .case-meta { grid-template-columns: 1fr; }
+  .case-pairs { gap: var(--gutter); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js main, .js .foot, .js .split .w, .js .item, .js .case-hero, .js .case-pair { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ───────── 음악 재생바 — 레퍼런스 pacomepertant.com 프로젝트 영상 플레이어
+   아래 가운데 흰 바: 검정 원 버튼 둘(일시정지·소리) + 사진 띠 재생바. 끌면 곡이 넘어간다 ───────── */
+.player {
+  position: fixed; left: 50%; bottom: var(--space-sound); z-index: 60;
+  display: flex; align-items: center; gap: 6px;
+  padding: var(--pad-bar); border-radius: var(--radius-bar);
+  background: var(--color-bar); -webkit-backdrop-filter: var(--blur-bar); backdrop-filter: var(--blur-bar);   /* 상단 바와 같은 반투명 회색 + 블러 */
+  opacity: 0; transform: translate(-50%, 16px); transition: opacity .45s var(--ease), transform .45s var(--ease);
+}
+.player[hidden] { display: none; }
+.player.is-shown { opacity: 1; transform: translate(-50%, 0); }
+
+/* 검정 원 버튼 — 올리면 살짝 작아졌다가 제 크기로 돌아온다 */
+.pl-btn {
+  width: var(--size-sound); height: var(--size-sound); border-radius: 50%;
+  display: grid; place-items: center; background: var(--color-ink); color: var(--color-bg);
+  transition: transform .25s var(--ease);   /* hover가 끝나면 이 속도로 원래 크기로 */
+}
+.pl-btn:hover { transform: scale(.88); }   /* 올려 둔 동안 살짝 작아진 채로 */
+.pl-btn:active { transform: scale(.82); }
+.i-play, .i-off { display: none; }
+.player:not(.is-playing) .i-pause { display: none; }
+.player:not(.is-playing) .i-play { display: block; }
+.player.is-muted .i-on { display: none; }
+.player.is-muted .i-off { display: block; }
+
+/* 사진 띠 재생바 */
+.pl-track {
+  position: relative; width: var(--w-track); height: var(--size-sound); margin-left: 8px;
+  border-radius: var(--radius-track); overflow: hidden; cursor: ew-resize; touch-action: none;
+  background: var(--color-placeholder);
+}
+.pl-thumbs { display: flex; height: 100%; }
+.pl-thumbs img { flex: 1; min-width: 0; height: 100%; object-fit: cover; pointer-events: none; }
+.pl-played { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--color-played); pointer-events: none; }
+.pl-head { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; margin-left: -1px; background: var(--color-bg); box-shadow: 0 0 0 .5px var(--color-muted); pointer-events: none; }
+.pl-track:hover .pl-head, .pl-track.is-dragging .pl-head { width: 3px; }
+.pl-track:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+
+/* 마우스를 따라오는 play ! / pause */
+.cursor-pill {
+  position: fixed; left: 0; top: 0; z-index: 70; pointer-events: none;
+  padding: 6px 14px; border-radius: 999px; background: var(--color-ink); color: var(--color-bg);
+  font-size: var(--size-pill); font-weight: var(--weight-lead); letter-spacing: var(--track-lead); line-height: 1.1; white-space: nowrap;
+  opacity: 0; scale: .6; transition: opacity .25s var(--ease), scale .3s var(--ease);
+}
+.cursor-pill.is-on { opacity: 1; scale: 1; }
+.cursor-pill.is-pop { animation: pop .35s var(--ease); }
+@keyframes pop { 40% { scale: .82; } 100% { scale: 1; } }
+.has-song .page-main { cursor: none; }
+.has-song .page-main a, .has-song .page-main button { cursor: pointer; }
+.has-song .page-main .item-link { cursor: none; }   /* 사진 위에서는 알약이 커서 역할 */
+
+.filter.is-playing sup { color: var(--color-ink); }
+@media (max-width: 719px) {
+  .player { bottom: var(--margin); }
+  .cursor-pill { display: none; }
+  .has-song .page-main { cursor: auto; }
+}
+@media (hover: none) { .cursor-pill { display: none; } .has-song .page-main { cursor: auto; } }
+
+
+/* ───────── 글래스 — 상단 바 · 음악 재생바 (Apple 글래스 참고) ───────── */
+.bar, .player {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-edge), var(--glass-shadow);
+}
+.bar::before, .player::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: var(--glass-sheen); pointer-events: none; z-index: -1;   /* 유리 표면에 비치는 빛 */
+}
+.bar { box-shadow: none; }   /* 상단 바는 테두리 선 없이 유리 느낌만 (학생 요청) */
+
+/* ───────── 사진 페이지 — 스크롤하면 설명이 제자리에 남고, 사진이 그 위를 덮으며 올라온다 (레퍼런스 case) ───────── */
+@media (min-width: 720px) {
+  .case-intro { position: sticky; top: calc(var(--bar-h) + var(--space-case-top)); z-index: 0; }
+  /* 설명 위로 올라오는 층 — 흰 바탕이라 사진 옆·사이 여백에서도 글자가 비치지 않는다 */
+  .case-hero, .case-more, .case-next { position: relative; z-index: 1; background: var(--color-bg); }
+  .case-hero { margin-left: calc(var(--margin) * -1); margin-right: calc(var(--margin) * -1); padding: 0 var(--margin); }
+  .case-more { margin-top: 0; padding-top: var(--section-gap); margin-left: calc(var(--margin) * -1); margin-right: calc(var(--margin) * -1); padding-left: var(--margin); padding-right: var(--margin); }
+  .case-next { margin-top: 0; padding-top: calc(var(--space-next) + var(--section-gap)); }
+}
+
+/* 설명 고정 범위 — case-stack 안에서만 머물고, 끝의 빈 공간(case-spacer)에서 다시 드러난 뒤 페이지와 함께 올라간다.
+   그래서 Next Photo는 항상 설명 아래에 오고 겹치지 않는다 */
+.case-stack { position: relative; }
+.case-spacer { height: 0; }
+@media (min-width: 720px) {
+  .case-spacer { height: calc(var(--intro-h, 360px) + var(--space-next)); }   /* 설명 높이 + 사진과의 간격 */
+  .case-next { margin-top: 0; padding: var(--space-next-top) 0 var(--space-next-tail); background: var(--color-bg); }
+}
+
+
+/* ───────── 메인 — 레퍼런스 damso.com: 가로 한 줄 + 아이팟 클릭휠 ───────── */
+.page-home { overflow: hidden; height: 100vh; }
+.page-home main { position: fixed; inset: 0; }
+
+/* 왼쪽 위 검은 상자 로고 · 오른쪽 위 지금 사진 이름 */
+.d-head {
+  position: fixed; top: var(--d-edge); left: var(--d-edge); right: var(--d-edge); z-index: 20;
+  display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none;
+}
+.d-head a { pointer-events: auto; }
+.d-logo {
+  background: var(--color-ink); color: var(--color-bg);
+  padding: 5px 7px; font-size: var(--d-size-logo); font-weight: 700; text-transform: uppercase; line-height: 1;
+}
+/* 상단 가운데 — 제목(노래, 검정·크게) + 설명(찍은 사람, 회색) */
+.d-now {
+  position: absolute; left: 50%; top: 0; translate: -50% 0;
+  display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; white-space: nowrap;
+}
+.d-song { font-size: var(--d-size-title); line-height: 1; color: var(--color-ink); }
+#d-credit { font-size: var(--d-size-sub); font-weight: var(--weight); color: var(--color-lead); }
+
+/* 가로 한 줄 — 가운데 한 장만 크게 */
+.d-track { list-style: none; margin: 0; padding: 0; }
+.d-item {
+  position: absolute; left: 50%; top: var(--d-y); width: var(--d-size); aspect-ratio: 1;
+  transform: translate(-50%, -50%) translateX(var(--x, 0)) scale(var(--d-small));
+  transition: transform var(--d-move) var(--ease), width var(--d-move) var(--ease), opacity .5s var(--ease);
+}
+.d-item.is-center { width: calc(var(--d-size) + var(--d-center-plus)); transform: translate(-50%, -50%) translateX(var(--x, 0)) scale(1); z-index: 2; }   /* 가운데만 조금 더 크게 */
+.d-item.is-far { opacity: 0; pointer-events: none; }
+.d-link { display: block; width: 100%; height: 100%; cursor: pointer; }
+.d-link img { width: 100%; height: 100%; object-fit: contain; user-select: none; }
+/* 옆 사진 — 흰색을 15% 덮은 것처럼 옅게 (흰 배경 위라 불투명도 85%와 같다), 마우스를 올려도 변화 없음 */
+.d-link img { transition: opacity var(--d-move) var(--ease); }
+.d-item:not(.is-center) .d-link img { opacity: calc(1 - var(--d-side-veil)); }
+
+/* 첫 등장 — 가운데가 먼저, 옆이 이어서 */
+.js .d-item { opacity: 0; }
+.js .is-in .d-item:not(.is-far) { opacity: 1; }
+.js .is-in .d-item:not(.is-center) { transition-delay: 0s, .35s; }
+
+/* 아이팟 클릭휠 */
+.ipod-wrap {
+  position: fixed; left: 50%; bottom: var(--ipod-bottom); transform: translateX(-50%); z-index: 30;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.ipod {
+  position: relative; width: var(--ipod-size); aspect-ratio: 1; border-radius: 50%;
+  background: var(--ipod-wheel); touch-action: none; user-select: none;
+}
+.ipod-btn { position: absolute; color: var(--ipod-label); display: grid; place-items: center; transition: color .2s, transform .15s; }
+.ipod-btn:hover { color: var(--color-bg); }
+.ipod-btn:active { transform: scale(.9); }
+.ipod-menu { top: 7%; left: 50%; translate: -50% 0; padding: 4px 8px; font-size: var(--ipod-size-label); font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+.ipod-prev { left: 7%; top: 50%; translate: 0 -50%; padding: 8px; }
+.ipod-next { right: 7%; top: 50%; translate: 0 -50%; padding: 8px; }
+.ipod-play { bottom: 7%; left: 50%; translate: -50% 0; padding: 6px 8px; }
+.is-playing .ipod-play { color: var(--color-bg); }
+.ipod-center {
+  position: absolute; left: 50%; top: 50%; width: 38%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  background: var(--ipod-center); transition: filter .2s, scale .15s;
+}
+.ipod-center:hover { filter: brightness(1.25); }
+.ipod-center:active { scale: .94; }
+.t-close { display: none; font-size: 1.4em; line-height: 1; }
+.menu-open .t-menu { display: none; }
+.menu-open .t-close { display: inline; }
+
+/* MENU를 누르면 휠 위에 열리는 검은 알약 메뉴 */
+.d-menu {
+  display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: var(--d-pill);
+  opacity: 0; transform: translateY(8px) scale(.96); pointer-events: none;
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.menu-open .d-menu { opacity: 1; transform: none; pointer-events: auto; }
+.d-menu a {
+  padding: 7px 14px; border-radius: 7px; color: var(--color-bg);
+  font-size: var(--d-size-pill); font-weight: 700; text-transform: uppercase;
+}
+.d-menu a:hover { background: var(--color-bg); color: var(--color-ink); }
+
+@media (max-width: 719px) {
+  :root { --d-size: 62vw; }
+}
+@media (prefers-reduced-motion: reduce) { .d-item, .d-menu { transition: none; } }

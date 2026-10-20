@@ -1,0 +1,123 @@
+/* 출처 레퍼런스: https://www.etienne.studio (2026-09-29 브라우저에서 직접 측정)
+   확인 = 레퍼런스 값 그대로 · 대체 = 유료 서체 등 대신 쓴 값 · 내가 정함 = 레퍼런스에 없는 값 */
+:root {
+  /* 색 */
+  --color-bg: #ffffff;                       /* 확인: body rgb(255,255,255) */
+  --color-ink: #000000;                      /* 확인: 활성 링크·로고 rgb(0,0,0) */
+  --color-muted: rgba(0, 0, 0, 0.4);         /* 확인: 비활성 메뉴·캡션 rgba(0,0,0,.4) */
+  --color-bar: rgba(176, 176, 176, 0.2);     /* 확인: 상단 바 배경 */
+  --color-muted-inv: rgba(255, 255, 255, .6); /* 내가 정함: 어두운 사진 위 비활성 메뉴 글자 */
+
+  /* 글래스 — Apple 글래스(Liquid Glass) 느낌을 참고해 내가 정함 (상단 바·음악 재생바 공통) */
+  --glass-bg: rgba(255, 255, 255, .22);                      /* 옅은 흰 유리 */
+  --glass-blur: blur(24px) saturate(180%);                   /* 뒤를 흐리게 + 색을 살짝 더 선명하게 */
+  --glass-edge: inset 0 1px 0 rgba(255, 255, 255, .7), inset 0 -1px 0 rgba(0, 0, 0, .06), inset 0 0 0 .5px rgba(255, 255, 255, .35);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, .10), 0 1px 2px rgba(0, 0, 0, .06);
+  --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, .45) 0%, rgba(255, 255, 255, .08) 38%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, .16) 100%);
+  --blur-bar: blur(20px);                    /* 확인: 상단 바 backdrop-filter */
+  --color-placeholder: #f2f2f2;              /* 내가 정함: 사진 로딩 전 자리 */
+
+  /* 글자 — 레퍼런스는 Neue Haas Grotesk Display 65 Medium 한 종, 12px 한 크기 */
+  --font: "Inter Tight", "Helvetica Neue", Helvetica, "Pretendard", Arial, sans-serif; /* 대체 */
+  --weight: 500;                             /* 확인: 65 Medium */
+  --weight-regular: 400;                     /* 내가 정함: Archive 캡션 작가·사이트 줄 (학생 요청) */
+  --size: 12px;                              /* 확인: 전 요소 12px */
+  --line: 1.2;                               /* 확인: 줄높이 ≈14.4px */
+
+  /* 묶음 이름 — 노래 커버 글자와 닮은 Google Fonts (내가 정함, 레퍼런스에 없음) */
+  --font-sun: "Archivo", "Inter Tight", sans-serif;      /* Midnight Sun: 굵은 기하학 산세리프 */
+  --font-born: "Anton", "Impact", sans-serif;            /* Born This Way: 좁고 굵은 산세리프 */
+  --font-say: "Lobster", cursive;                        /* Say So: 70년대 레트로 스크립트 */
+  --size-title: clamp(40px, 7vw, 104px);                 /* 묶음 이름 크기 */
+  --space-lead: clamp(10px, 1.2vw, 20px);    /* 내가 정함: Why 제목과 문단 사이 — 한 덩어리로 보이게 좁게 (학생 요청) */
+  --weight-title: 800;                                   /* Why these — 다른 묶음 이름과 같은 두께 */
+
+  /* 큰 문단 — 레퍼런스 Info 페이지 (2026-09-29 측정: 1024px 화면에서 22px, 줄높이 1, 600, #999 + 핵심어 검정) */
+  --size-lead: clamp(20px, 2.15vw, 36px);    /* 확인 (22px ÷ 1024px ≈ 2.15vw) */
+  --line-lead: 1;                            /* 확인 */
+  --weight-lead: 600;                        /* 확인 */
+  --color-lead: #999999;                     /* 확인: rgb(153,153,153) */
+  --track-lead: -0.03em;                     /* 내가 정함: 문단이 한 덩어리로 보이게 조임 (학생 요청) */
+  /* 레퍼런스 Archive 캡션 · Info 목록 (2026-09-29 측정) */
+  --size-caption: 11px;                      /* 확인: Archive 작품 이름 11px */
+  --weight-caption: 600;                     /* 확인 */
+  --size-info: 14px;                         /* 확인: Info 목록 14px */
+  --line-info: 1.2;                          /* 확인: 줄 간격 17px ÷ 14px */
+  --space-info: 32px;                        /* 확인: 문단↔라벨, 묶음↔묶음 사이 ≈32px */
+  --space-label: 6px;                        /* 확인: 라벨↔목록 사이 */
+  --archive-cols: 6;                         /* 확인: 레퍼런스 Archive 6열, 한 장 = 한 열 */
+  --size-filter: clamp(22px, 2.6vw, 40px);   /* 내가 정함: Archive 위 노래 이름 버튼 */
+  --space-page-top: clamp(40px, 5vw, 80px);  /* 내가 정함: 상단 바 아래 첫 내용까지 */
+  --size-nav: 13px;                                      /* 메뉴 — 글꼴마다 눈대중 크기를 맞춤 */
+  --size-nav-born: 12px;                                 /* Anton은 커 보여서 한 단계 작게 */
+  --size-nav-say: 14px;                                  /* Lobster는 작아 보여서 한 단계 크게 */
+  --track-sun: -0.03em;
+  --track-born: 0.01em;
+
+  /* 간격 */
+  --margin: 16px;                            /* 확인: 좌우 여백 */
+  --gutter: 10px;                            /* 확인: 사진 사이 가로 간격 */
+  --row-gap: 56px;                           /* 확인: 아카이브 줄 사이 */
+  --section-gap: 160px;                      /* 내가 정함: 묶음 사이 (줄 간격의 약 3배) */
+  --bar-h: 30px;                             /* 확인: 상단 바 높이 30.4px */
+  --cols: 6;                                 /* 확인: 레퍼런스 6열 — 제목·소개·푸터 배치 기준 */
+  --grid-cols: 5;                            /* 내가 정함: 사진 묶음은 5장이 화면 폭을 꽉 채우도록 5열 */
+  --space-title: clamp(32px, 3.2vw, 56px);   /* 내가 정함: 묶음 제목과 사진 사이 — Say So 꼬리(y)가 사진에 닿지 않게 */
+
+  /* 사진 한 장 페이지 — 레퍼런스 case(clubstrozzi) 2026-09-29 측정 */
+  --space-case-top: clamp(96px, 24vh, 240px); /* 확인: 1024×768에서 첫 문단이 246px에 시작 */
+  --gap-case: 16px;                           /* 확인: 두 칸 사진 사이 */
+  --ratio-case: 4 / 5;                        /* 확인: 488×610 */
+  --size-thumb: 96px;                         /* 내가 정함: Next Photo 영역 안에서 마우스를 따라다니는 작은 사진 (학생 요청으로 180→96) */
+  --space-next: clamp(96px, 14vw, 180px);     /* 내가 정함: Next Photo 영역 위아래 여백 — 사진이 움직일 공간 */
+  --space-next-top: clamp(48px, 7vw, 120px);  /* 내가 정함: 설명 아래 ~ Next Photo 글자 사이 */
+  --h-foot: 64px;                             /* 내가 정함: 푸터 높이 어림값 */
+  --h-next-text: 64px;                        /* 내가 정함: Next Photo 글자 + 다음 사진 이름 높이 어림값 */
+  /* Next Photo 아래 여백 — 스크롤 끝에서 설명이 상단 바 바로 아래(40px)에 온전히 보이도록 남는 높이를 채운다 */
+  --space-next-tail: max(80px, calc(100vh - var(--bar-h) - 40px - var(--intro-h, 360px) - var(--space-next-top) - var(--h-next-text) - var(--h-foot)));
+
+  /* 음악 메뉴 — 레퍼런스 pacomepertant.com sound-button 측정 */
+  --size-sound: 40px;                        /* 추정: 재생바 원 버튼 (캡처 비율로 잼) */
+  --space-sound: 24px;                       /* 추정: 화면 아래에서 재생바까지 */
+  --pad-bar: 8px;                            /* 추정: 흰 바 안쪽 여백 */
+  --radius-bar: 20px;                        /* 추정: 흰 바 모서리 */
+  --radius-track: 10px;                      /* 추정: 사진 띠 모서리 */
+  --w-track: clamp(160px, 22vw, 300px);      /* 추정: 사진 띠 길이 */
+  --shadow-bar: 0 6px 30px rgba(0, 0, 0, .12); /* 내가 정함: 흰 사이트 위라 바가 보이도록 그림자 */
+  --color-played: rgba(255, 255, 255, .35);  /* 내가 정함: 이미 들은 부분을 옅게 */
+  --size-pill: 18px;                         /* 추정: play ! 글자 */
+
+  --h-ring: 600vh;                           /* 내가 정함: 첫 화면 링 스크롤 길이 — 360°÷500vh ≈ 전의 120°÷160vh와 같은 속도 */
+
+  /* 메인 — 레퍼런스 damso.com 메인 (2026-10-20 측정, 1024×768 기준) */
+  --d-size: clamp(200px, 24vw, 420px);       /* 가운데 사진 칸. 레퍼런스 159px(15.5vw) 상품보다 사진이라 키움 */
+  --d-small: .45;                            /* 확인: 옆 사진 71px ÷ 가운데 159px */
+  --d-y: 42%;                                /* 확인: 가운데 줄 높이 — 화면 위에서 약 40% */
+  --d-edge: 20px;                            /* 확인: 로고·제목이 화면 끝에서 떨어진 거리 (21px·18px) */
+  --d-size-head: clamp(10px, .83vw, 14px);   /* 확인: 오른쪽 위 제목 8.5px ÷ 1024px ≈ .83vw, 굵게·대문자 */
+  --d-size-title: clamp(22px, 2.2vw, 38px);  /* 내가 정함: 상단 가운데 노래 제목 — 제목처럼 크게 (학생 요청) */
+  --d-size-sub: clamp(12px, .95vw, 16px);    /* 내가 정함: 그 아래 찍은 사람 · 사이트 — 설명처럼 (학생 요청) */
+  --d-size-logo: clamp(8px, .62vw, 11px);    /* 추정: 로고 상자 글자 */
+  --ipod-size: clamp(120px, 12.5vw, 170px);  /* 확인: 클릭휠 128px ÷ 1024px = 12.5vw */
+  --ipod-bottom: 20px;                       /* 확인: 화면 아래에서 휠까지 ≈17px */
+  --ipod-wheel: linear-gradient(#242424, #1a1a1a);   /* 확인: 휠 그라데이션 rgb(36,36,36)→rgb(26,26,26) */
+  --ipod-center: linear-gradient(#3a3a3a, #262626);  /* 추정: 가운데 버튼 */
+  --ipod-label: #d0d0d0;                     /* 확인: MENU 글자 rgb(208,208,208) */
+  --ipod-size-label: clamp(8px, .76vw, 11px);/* 확인: MENU 7.8px ÷ 1024px */
+  --d-pill: #212121;                         /* 확인: 메뉴 알약 배경 rgb(33,33,33) */
+  --d-size-pill: clamp(9px, .7vw, 12px);     /* 확인: 메뉴 글자 7.1px ÷ 1024px */
+  --d-move: .7s;                             /* 추정: 한 칸 넘어가는 시간 */
+  --d-center-plus: 8px;                      /* 가운데 사진만 더 키우는 크기 (학생 요청 5~10px) */
+  --d-side-veil: .45;                        /* 옆 사진 위에 깐 흰색 정도 (학생 요청 45%) */
+  --d-gap1: 25;                              /* 가운데 사진 중심 → 첫 옆 사진 중심 (화면 폭 %). 레퍼런스 27.5 → 학생 요청으로 좁힘 */
+  --d-gap2: 20;                              /* 옆 사진끼리 중심 간격 (화면 폭 %). 레퍼런스 23.2 → 좁힘 */
+  --d-gap1-m: 42;                            /* 폰(720px 미만) — 가운데 사진이 커서 따로 (전 48) */
+  --d-gap2-m: 24;                            /* 폰 옆 사진끼리 (전 30) */
+
+  /* 움직임 */
+  --dur-in: .9s;                             /* 내가 정함: 페이지·사진 등장 */
+  --dur-out: .38s;                           /* 내가 정함: 페이지 나갈 때 (script.js 380ms와 맞춤) */
+  --zoom-hover: 1.08;                        /* 내가 정함: 사진에 올리면 확대 (1.03→1.08, 학생 요청) */
+  --shift: 24px;                             /* 내가 정함: 등장할 때 올라오는 거리 */
+  --ease: cubic-bezier(.2, .7, .2, 1);       /* 내가 정함 */
+}

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wading at Sunset — My Gaze Archive</title>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@800&family=Inter+Tight:wght@400;500;600;800&family=Lobster&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="page-case">
+
+<header class="bar">
+  <a class="bar-logo ink" href="../index.html">My Gaze Archive</a>
+  <nav class="bar-nav" aria-label="페이지">
+    <a href="../archive.html" class="f-why is-active" aria-current="page">Archive</a>
+    <a href="../info.html" class="f-why">Info</a>
+  </nav>
+  <time class="bar-clock" id="clock" aria-live="off"></time>
+</header>
+
+<main class="page-main case">
+  <!-- 설명은 이 묶음 안에서만 제자리에 머문다. 끝의 빈 공간에서 다시 보이고, 그 뒤로는 페이지와 함께 올라간다 -->
+  <div class="case-stack">
+  <section class="case-intro" aria-labelledby="case-title">
+    <h1 id="case-title" class="visually-hidden">Wading at Sunset</h1>
+    <p class="case-text split">People wade into warm water as the sun drops into the sea. Small silhouettes, one wide horizon.</p>
+    <p class="case-text split">The bucket-list version of an evening — being inside the frame instead of watching it.</p>
+    <dl class="case-meta">
+      <div><dt>Frame</dt><dd>Wading at Sunset</dd></div>
+      <div><dt>Chapter</dt><dd><a class="f-sun" href="../archive.html#midnight-sun">Midnight Sun</a><br><span class="case-sub">Zara Larsson</span></dd></div>
+      <div><dt>Photo</dt><dd>Zaktech90<br><span class="case-sub">Pexels</span></dd></div>
+    </dl>
+  </section>
+
+  <figure class="case-hero reveal">
+    <img src="../assets/sky05_pexels_zaktech90.jpg" data-lum="5679bca754679bccb964468aceb9743457ad8542234456543235555776333456676642345679754223468a85322334775321" alt="Wading at Sunset, Zaktech90">
+  </figure>
+
+  <section class="case-more" aria-label="같은 묶음의 다른 사진">
+    <p class="case-more-label">More from <span class="f-sun">Midnight Sun</span></p>
+    <div class="case-pairs">
+      <a class="case-pair" href="pink-dusk.html"><span class="item-media"><img src="../assets/sky01_unsplash_jordansteranka.jpg" data-lum="33444444444445555455555566666666766677776777779aab56689bcccc7778abbcdd555566789922222334442222222222" alt="Pink Dusk, Jordan Steranka" loading="lazy"></span><span class="cap-name">Pink Dusk</span></a>
+      <a class="case-pair" href="palm-silhouettes.html"><span class="item-media"><img src="../assets/sky02_pexels_danielflores.jpg" data-lum="2222221111222222222233333343335667655554abcdeda67456779843211111111000000000000000000000000000000000" alt="Palm Silhouettes, Daniel Flores" loading="lazy"></span><span class="cap-name">Palm Silhouettes</span></a>
+    </div>
+  </section>
+  <div class="case-spacer" aria-hidden="true"></div>
+  </div>
+
+  <a class="case-next" href="teal-tips.html">
+    <span class="case-next-label">Next Photo</span>
+    <span class="case-next-name">Teal Tips</span>
+    <span class="case-next-thumb"><img src="../assets/hand01_unsplash_godz1.jpg" data-lum="4213234441222212332112122211012124433100112564431111214753112022255422201233453442102457425520125643" alt="" loading="lazy"></span>
+  </a>
+  <!-- 음악 재생바 — 레퍼런스(pacomepertant.com 프로젝트 영상) 하단 바: 일시정지 · 소리 · 사진 띠 재생바 -->
+  <div class="player" id="player" hidden data-key="midnight-sun" data-song="../assets/audio/midnight-sun.mp3" data-label="Midnight Sun — Zara Larsson">
+    <button type="button" class="pl-btn" id="player-btn" aria-label="일시정지">
+      <svg class="i-pause" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1" width="2.6" height="10" rx="1" fill="currentColor"/><rect x="7.4" y="1" width="2.6" height="10" rx="1" fill="currentColor"/></svg>
+      <svg class="i-play" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9a.6.6 0 0 0 .9.5l7-4.5a.6.6 0 0 0 0-1l-7-4.5a.6.6 0 0 0-.9.5Z" fill="currentColor"/></svg>
+    </button>
+    <button type="button" class="pl-btn" id="player-mute" aria-label="소리 끄기">
+      <svg class="i-on" width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M8.67 3.33a3.33 3.33 0 0 1 0 5.34" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/><path d="M11 1c1.25 1.17 2 3 2 5s-.75 3.83-2 5" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/><path d="M2.67 8H1.33a.67.67 0 0 1-.66-.67V4.67c0-.37.3-.67.66-.67h1.34L5 1c.3-.5 1-.3 1 .33v9.34c0 .63-.7.83-1 .33L2.67 8Z" fill="currentColor" stroke="currentColor" stroke-width="1.33" stroke-linejoin="round"/></svg>
+      <svg class="i-off" width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M9 4l4 4M13 4l-4 4" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/><path d="M2.67 8H1.33a.67.67 0 0 1-.66-.67V4.67c0-.37.3-.67.66-.67h1.34L5 1c.3-.5 1-.3 1 .33v9.34c0 .63-.7.83-1 .33L2.67 8Z" fill="currentColor" stroke="currentColor" stroke-width="1.33" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="pl-track" id="player-track" role="slider" tabindex="0" aria-label="재생 위치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="pl-thumbs" id="player-thumbs"><img src="../assets/sky01_unsplash_jordansteranka.jpg" alt=""><img src="../assets/sky02_pexels_danielflores.jpg" alt=""><img src="../assets/sky03_pexels_maczkogabor.jpg" alt=""><img src="../assets/sky04_unsplash_oansen.jpg" alt=""><img src="../assets/sky05_pexels_zaktech90.jpg" alt=""></div>
+      <span class="pl-played" id="player-played"></span>
+      <span class="pl-head" id="player-head"></span>
+    </div>
+    <audio id="player-audio" preload="metadata"></audio>
+  </div>
+  <!-- 마우스를 따라다니는 play ! / pause 알약 — 빈 곳을 누르면 멈추고 다시 튼다 -->
+  <div class="cursor-pill" id="cursor-pill" aria-hidden="true">pause</div>
+</main>
+
+<footer class="foot">
+  <span class="ink">© 2026 이채은</span>
+  <span class="foot-mid"><a href="../archive.html#midnight-sun">Midnight Sun</a><br><a href="../archive.html#born-this-way">Born This Way</a><br><a href="../archive.html#say-so">Say So</a></span>
+  <span class="foot-right">Photos via Unsplash · Pexels<br><a href="../info.html">Info</a></span>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
