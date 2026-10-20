@@ -440,8 +440,16 @@ button:focus:not(:focus-visible) { outline: none; }
 .d-link { display: block; width: 100%; height: 100%; cursor: pointer; }
 .d-link img { width: 100%; height: 100%; object-fit: contain; user-select: none; }
 /* 옆 사진 — 흰색을 15% 덮은 것처럼 옅게 (흰 배경 위라 불투명도 85%와 같다), 마우스를 올려도 변화 없음 */
-.d-link img { transition: opacity var(--d-move) var(--ease); }
-.d-item:not(.is-center) .d-link img { opacity: calc(1 - var(--d-side-veil)); }
+/* 사진은 늘 불투명 — 옆 사진의 옅음은 사진 크기에 꼭 맞춘 흰 막(::after)으로 덮는다 (뒤 배경 글자가 비치지 않게) */
+.d-link { display: grid; place-items: center; }
+.d-pic { position: relative; display: block; line-height: 0; }
+.d-link .d-pic img { width: auto; height: auto; max-width: var(--d-size); max-height: var(--d-size); object-fit: initial; }
+.d-item.is-center .d-pic img { max-width: calc(var(--d-size) + var(--d-center-plus)); max-height: calc(var(--d-size) + var(--d-center-plus)); }
+.d-pic::after {
+  content: ""; position: absolute; inset: 0; background: rgb(255 255 255 / var(--d-side-veil));
+  opacity: 1; transition: opacity var(--d-move) var(--ease); pointer-events: none;
+}
+.d-item.is-center .d-pic::after { opacity: 0; }
 
 /* 첫 등장 — 가운데가 먼저, 옆이 이어서 */
 .js .d-item { opacity: 0; }
@@ -506,3 +514,19 @@ button:focus:not(:focus-visible) { outline: none; }
 .page-home main, .d-head, .ipod-wrap { z-index: 1; }
 .d-head { z-index: 20; }
 .ipod-wrap { z-index: 30; }
+
+
+/* ───────── 메인 배경 글자 — V5 Prophit (Cell) · 무료 폰트, 만든 이 Roberto Christen (V5) ───────── */
+.d-item { z-index: 1; }          /* 사진은 모두 배경 글자 위 */
+.d-item.is-center { z-index: 2; }
+@font-face {
+  font-family: "V5 Prophit Cell";
+  src: url("fonts/v5-prophit-cell.ttf") format("truetype");
+  font-display: swap;
+}
+.d-wordmark {
+  position: absolute; left: 50%; top: var(--d-y); translate: -50% -50%; z-index: 0;   /* 그라데이션 배경 바로 위, 모든 사진 아래 */
+  margin: 0; white-space: nowrap; pointer-events: none; user-select: none;
+  font-family: "V5 Prophit Cell", var(--font); font-size: var(--d-size-mark); line-height: 1;
+  color: rgb(255 255 255 / var(--d-mark-alpha));
+}
