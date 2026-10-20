@@ -40,6 +40,7 @@
     const it = items[cur];
     songEl.textContent = it.dataset.song;
     creditEl.textContent = it.dataset.credit;   // 지금 사진을 찍은 사람 · 사이트
+    document.body.dataset.theme = it.dataset.key;   // 배경 그라데이션 색
     songEl.className = 'd-song ' + ({ 'midnight-sun': 'f-sun', 'born-this-way': 'f-born', 'say-so': 'f-say' })[it.dataset.key];
     center.href = it.querySelector('a').getAttribute('href');
     center.setAttribute('aria-label', it.dataset.name + ' 사진 보기');

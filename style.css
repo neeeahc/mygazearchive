@@ -492,3 +492,17 @@ button:focus:not(:focus-visible) { outline: none; }
   :root { --d-size: 62vw; }
 }
 @media (prefers-reduced-motion: reduce) { .d-item, .d-menu { transition: none; } }
+
+
+/* ───────── 메인 배경 — 테마마다 한 가지 색, 위 0% → 아래 100% 그라데이션 ───────── */
+.d-bgs { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.d-bg { position: absolute; inset: 0; opacity: 0; transition: opacity var(--d-bg-fade) var(--ease); }
+.d-bg[data-key="midnight-sun"] { background: linear-gradient(to bottom, rgb(var(--theme-sun) / 0), rgb(var(--theme-sun) / 1)); }
+.d-bg[data-key="born-this-way"] { background: linear-gradient(to bottom, rgb(var(--theme-born) / 0), rgb(var(--theme-born) / 1)); }
+.d-bg[data-key="say-so"] { background: linear-gradient(to bottom, rgb(var(--theme-say) / 0), rgb(var(--theme-say) / 1)); }
+[data-theme="midnight-sun"] .d-bg[data-key="midnight-sun"],
+[data-theme="born-this-way"] .d-bg[data-key="born-this-way"],
+[data-theme="say-so"] .d-bg[data-key="say-so"] { opacity: 1; }
+.page-home main, .d-head, .ipod-wrap { z-index: 1; }
+.d-head { z-index: 20; }
+.ipod-wrap { z-index: 30; }
